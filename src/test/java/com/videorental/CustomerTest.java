@@ -119,6 +119,22 @@ public class CustomerTest {
     }
 
     @Test
+    public void statementForUnknownPriceCode() {
+        // arrange
+        int unknownPriceCode = 99;
+        customer.addRental(createRentalFor(2, unknownPriceCode));
+
+        // act
+        String statement = customer.statement();
+
+        // assert
+        assertThat(statement).isEqualTo("Rental Record for NAME_NOT_IMPORTANT\n"
+                + "\t0.0(TITLE_NOT_IMPORTANT)\n"
+                + "Amount owed is 0.0\n"
+                + "You earned 1 frequent renter pointers");
+    }
+
+    @Test
     public void statementForFewMovieRental() {
         Movie regularMovie = new Movie(TITLE, Movie.REGULAR);
         Movie newReleaseMovie = new Movie(TITLE, Movie.NEW_RELEASE);
